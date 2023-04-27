@@ -7,11 +7,11 @@ namespace WebServCo\Database\Service;
 use PDO;
 use PDOStatement;
 use UnexpectedValueException;
-use WebServCo\Database\Contract\PDOStatementServiceInterface;
+use WebServCo\Database\Contract\PDOServiceInterface;
 
 use function is_array;
 
-final class PDOStatementService implements PDOStatementServiceInterface
+final class PDOService implements PDOServiceInterface
 {
     public function __construct(private PDO $pdo)
     {

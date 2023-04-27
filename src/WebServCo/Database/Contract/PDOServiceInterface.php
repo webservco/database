@@ -6,7 +6,7 @@ namespace WebServCo\Database\Contract;
 
 use PDOStatement;
 
-interface PDOStatementServiceInterface
+interface PDOServiceInterface
 {
     /**
      * Helper for `PDOStatement::fetch`
