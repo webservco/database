@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace WebServCo\Database\DataTransfer;
 
-final class PDOConfiguration
+use WebServCo\DataTransfer\Contract\DataTransferInterface;
+
+final class PDOConfiguration implements DataTransferInterface
 {
     public function __construct(
         public readonly string $driverName,
