@@ -7,6 +7,7 @@ namespace WebServCo\Database\Service;
 use PDO;
 use PDOException;
 use PDOStatement;
+use Throwable;
 use UnexpectedValueException;
 use WebServCo\Database\Contract\PDOServiceInterface;
 use WebServCo\Database\DataTransfer\ErrorInfo;
@@ -40,6 +41,27 @@ final class PDOService implements PDOServiceInterface
         throw new UnexpectedValueException('Statement error.');
     }
 
+    /**
+     * @return array<string,scalar|null>
+     */
+    public function fetchAssoc(PDOStatement $stmt): array
+    {
+        /**
+         * @var array<string,scalar|null>|false $result
+         */
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (is_array($result)) {
+            return $result;
+        }
+
+        // PDO statement returns false on both error and "no result".
+        $this->assertNoError($stmt);
+
+        // If we arrive here it means there were no result(s).
+        return [];
+    }
+
     public function getErrorInfo(PDO|PDOException|PDOStatement $pdoObject): ?ErrorInfo
     {
         $errorInfoArray = $this->getErrorInfoArray($pdoObject);
@@ -62,25 +84,37 @@ final class PDOService implements PDOServiceInterface
         );
     }
 
-    /**
-     * @return array<string,scalar|null>
-     */
-    public function fetchAssoc(PDOStatement $stmt): array
+    public function isRecoverableError(Throwable $throwable): bool
     {
-        /**
-         * @var array<string,scalar|null>|false $result
-         */
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (is_array($result)) {
-            return $result;
+        if (!$throwable instanceof PDOException) {
+            // Not a PDO exception.
+            return false;
         }
 
-        // PDO statement returns false on both error and "no result".
-        $this->assertNoError($stmt);
+        $errorInfo = $this->getErrorInfo($throwable);
 
-        // If we arrive here it means there were no result(s).
-        return [];
+        if ($errorInfo === null) {
+            // There is a PDO exception, but no error info. Unusual situation, butt technically possible.
+            return false;
+        }
+
+        /**
+         * https://en.wikipedia.org/wiki/SQLSTATE
+         * '40001': "transaction rollback" / "serialization failure"
+         * This should be enough, however to be sure, implement specific situations as they appear.
+         */
+        if ($errorInfo->sqlStateErrorCode === '40001') {
+            /**
+             * https://mariadb.com/kb/en/mariadb-error-codes/
+             * '1213': "Deadlock found when trying to get lock; try restarting transaction"
+             */
+            if ($errorInfo->driverErrorCode === '1213') {
+                return true;
+            }
+        }
+
+        // Any other situation.
+        return false;
     }
 
     public function prepareStatement(string $query): PDOStatement

@@ -7,6 +7,7 @@ namespace WebServCo\Database\Contract;
 use PDO;
 use PDOException;
 use PDOStatement;
+use Throwable;
 use WebServCo\Database\DataTransfer\ErrorInfo;
 
 interface PDOServiceInterface
@@ -21,8 +22,6 @@ interface PDOServiceInterface
      */
     public function assertNoError(PDOStatement $stmt): bool;
 
-    public function getErrorInfo(PDO|PDOException|PDOStatement $pdoObject): ?ErrorInfo;
-
     /**
      * Helper for `PDOStatement::fetch`
      * Fetches the next row from a result set
@@ -31,6 +30,15 @@ interface PDOServiceInterface
      * @return array<string,scalar|null>
      */
     public function fetchAssoc(PDOStatement $stmt): array;
+
+    public function getErrorInfo(PDO|PDOException|PDOStatement $pdoObject): ?ErrorInfo;
+
+    /**
+     * Check if error is recoverable.
+     *
+     * Use case: check if transaction can be retired.
+     */
+    public function isRecoverableError(Throwable $throwable): bool;
 
     /**
      * Helper for `PDO::prepare`.
