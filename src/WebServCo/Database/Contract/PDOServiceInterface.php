@@ -46,5 +46,5 @@ interface PDOServiceInterface
      * Why: make sure a PDOStatement is always returned.
      * (`PDO::prepare` can return false on error).
      */
-    public function prepareStatement(string $query): PDOStatement;
+    public function prepareStatement(PDO $pdo, string $query): PDOStatement;
 }

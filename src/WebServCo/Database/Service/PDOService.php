@@ -19,10 +19,6 @@ use function is_string;
 
 final class PDOService implements PDOServiceInterface
 {
-    public function __construct(private PDO $pdo)
-    {
-    }
-
     public function assertNoError(PDOStatement $stmt): bool
     {
         $errorInfo = $this->getErrorInfo($stmt);
@@ -117,9 +113,9 @@ final class PDOService implements PDOServiceInterface
         return false;
     }
 
-    public function prepareStatement(string $query): PDOStatement
+    public function prepareStatement(PDO $pdo, string $query): PDOStatement
     {
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $pdo->prepare($query);
         if (!($stmt instanceof PDOStatement)) {
             throw new UnexpectedValueException('Error preparing statement.');
         }
