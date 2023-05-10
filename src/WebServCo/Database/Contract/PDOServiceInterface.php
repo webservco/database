@@ -37,6 +37,9 @@ interface PDOServiceInterface
      * Check if error is recoverable.
      *
      * Use case: check if transaction can be retired.
+     * References:
+     * https://en.wikipedia.org/wiki/SQLSTATE
+     * https://mariadb.com/kb/en/mariadb-error-codes/
      */
     public function isRecoverableError(Throwable $throwable): bool;
 

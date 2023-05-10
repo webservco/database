@@ -94,23 +94,7 @@ final class PDOService implements PDOServiceInterface
             return false;
         }
 
-        /**
-         * https://en.wikipedia.org/wiki/SQLSTATE
-         * '40001': "transaction rollback" / "serialization failure"
-         * This should be enough, however to be sure, implement specific situations as they appear.
-         */
-        if ($errorInfo->sqlStateErrorCode === '40001') {
-            /**
-             * https://mariadb.com/kb/en/mariadb-error-codes/
-             * '1213': "Deadlock found when trying to get lock; try restarting transaction"
-             */
-            if ($errorInfo->driverErrorCode === '1213') {
-                return true;
-            }
-        }
-
-        // Any other situation.
-        return false;
+        return $this->isRecoverableErrorMariadb($errorInfo);
     }
 
     public function prepareStatement(PDO $pdo, string $query): PDOStatement
@@ -140,6 +124,20 @@ final class PDOService implements PDOServiceInterface
                 // \PDO, \PDOStatement
                 return $this->parseOriginalErrorInfo($pdoObject->errorInfo());
         }
+    }
+
+    private function isRecoverableErrorMariadb(ErrorInfo $errorInfo): bool
+    {
+        return match ($errorInfo->sqlStateErrorCode) {
+            // '40001': "transaction rollback" / "serialization failure"
+            // '1213': "Deadlock found when trying to get lock; try restarting transaction"
+            '40001' => $errorInfo->driverErrorCode === '1213',
+            // 'HY000' CLI-specific condition
+            // '1205': "Lock wait timeout exceeded; try restarting transaction"
+            'HY000' => $errorInfo->driverErrorCode === '1205',
+            // Any other situation.
+            default => false,
+        };
     }
 
     /**
