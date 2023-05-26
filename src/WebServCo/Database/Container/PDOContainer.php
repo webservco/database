@@ -15,11 +15,12 @@ final class PDOContainer implements PDOContainerInterface
 {
     private ?PDO $pdo = null;
     private ?PDOServiceInterface $pdoService = null;
-
-    public function __construct(
-        private PDOConfigurationFactoryInterface $pdoConfigurationFactory,
-        private PDOFactoryInterface $pdoFactory,
-    ) {
+    private PDOConfigurationFactoryInterface $pdoConfigurationFactory;
+    private PDOFactoryInterface $pdoFactory;
+    public function __construct(PDOConfigurationFactoryInterface $pdoConfigurationFactory, PDOFactoryInterface $pdoFactory)
+    {
+        $this->pdoConfigurationFactory = $pdoConfigurationFactory;
+        $this->pdoFactory = $pdoFactory;
     }
 
     public function getPDO(): PDO

@@ -11,8 +11,10 @@ use WebServCo\Database\Contract\TransactionalDatabaseServiceInterface;
 
 final class TransactionalDatabaseService implements TransactionalDatabaseServiceInterface
 {
-    public function __construct(private PDO $pdo)
+    private PDO $pdo;
+    public function __construct(PDO $pdo)
     {
+        $this->pdo = $pdo;
     }
 
     public function beginTransaction(): bool
