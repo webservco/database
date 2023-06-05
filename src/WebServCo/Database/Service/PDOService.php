@@ -90,7 +90,7 @@ final class PDOService implements PDOServiceInterface
         $errorInfo = $this->getErrorInfo($throwable);
 
         if ($errorInfo === null) {
-            // There is a PDO exception, but no error info. Unusual situation, butt technically possible.
+            // There is a PDO exception, but no error info. Unusual situation, however technically possible.
             return false;
         }
 
