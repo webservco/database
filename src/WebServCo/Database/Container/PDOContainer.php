@@ -22,12 +22,17 @@ final class PDOContainer implements PDOContainerInterface
     ) {
     }
 
+    public function createPDO(): PDO
+    {
+        return $this->pdoFactory->createPDO(
+            $this->pdoConfigurationFactory->createPDOConfiguration(),
+        );
+    }
+
     public function getPDO(): PDO
     {
         if ($this->pdo === null) {
-            $this->pdo = $this->pdoFactory->createPDO(
-                $this->pdoConfigurationFactory->createPDOConfiguration(),
-            );
+            $this->pdo = $this->createPDO();
         }
 
         return $this->pdo;
