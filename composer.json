@@ -39,11 +39,11 @@
         "slevomat/coding-standard": "^8",
         "squizlabs/php_codesniffer" : "^3",
         "vimeo/psalm": "^5",
-        "webservco/coding-standards": "@dev"
+        "webservco/coding-standards": "^0"
     },
     "require": {
         "php" : "^8.2",
-        "webservco/data-transfer" : "@dev"
+        "webservco/data-transfer" : "^0"
     },
     "scripts": {
         "check:lint": "vendor/bin/parallel-lint bin config public resources src tests",
