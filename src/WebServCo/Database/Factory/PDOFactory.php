@@ -46,9 +46,6 @@ final class PDOFactory implements PDOFactoryInterface
 
     private function validateDriverName(string $driverName): bool
     {
-        return match ($driverName) {
-            'mysql' => true,
-            default => throw new OutOfBoundsException('Unsupported driver.'),
-        };
+        return $driverName === 'mysql' ? true : null;
     }
 }
