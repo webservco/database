@@ -151,7 +151,7 @@ final class PDOService implements PDOServiceInterface
     }
 
     /**
-     * phpcs:ignore SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @phpcs:ignore SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
      * @param array<mixed>|null $originalErrorInfo
      * @return array<int,int|string|null>
      */
@@ -164,7 +164,7 @@ final class PDOService implements PDOServiceInterface
         }
 
         /**
-         * phpcs:ignore SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+         * @phpcs:ignore SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
          * @var mixed $value
          */
         foreach ($originalErrorInfo as $key => $value) {
