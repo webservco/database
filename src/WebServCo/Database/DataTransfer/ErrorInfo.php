@@ -18,13 +18,25 @@ use WebServCo\DataTransfer\Contract\DataTransferInterface;
  */
 final class ErrorInfo implements DataTransferInterface
 {
-    public function __construct(
+    /**
+     * @readonly
+     */
+    public string $sqlStateErrorCode;
+    /**
+     * @readonly
+     */
+    public ?string $driverErrorCode;
+    /**
+     * @readonly
+     */
+    public ?string $driverErrorMessage;
+    public function __construct(string $sqlStateErrorCode, ?string $driverErrorCode, ?string $driverErrorMessage)
+    {
         // 0 "SQLSTATE error code (a five characters alphanumeric identifier defined in the ANSI SQL standard)."
-        public readonly string $sqlStateErrorCode,
+        $this->sqlStateErrorCode = $sqlStateErrorCode;
         // 1 "Driver-specific error code."
-        public readonly ?string $driverErrorCode,
+        $this->driverErrorCode = $driverErrorCode;
         // 2 "Driver-specific error message."
-        public readonly ?string $driverErrorMessage,
-    ) {
+        $this->driverErrorMessage = $driverErrorMessage;
     }
 }
