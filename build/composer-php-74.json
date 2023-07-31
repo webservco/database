@@ -21,7 +21,7 @@
     "name" : "webservco/database",
     "require": {
         "php" : "^7.4",
-        "webservco/data-transfer" : "^0"
+        "webservco/data" : "^0"
     },
     "type" : "library"
 }
