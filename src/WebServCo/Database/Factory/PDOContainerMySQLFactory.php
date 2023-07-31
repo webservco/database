@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebServCo\Database\Factory;
 
 use WebServCo\Database\Container\PDOContainer;
+use WebServCo\Database\Contract\PDOContainerInterface;
 
 final class PDOContainerMySQLFactory
 {
@@ -17,7 +18,7 @@ final class PDOContainerMySQLFactory
     ) {
     }
 
-    public function createPDOContainer(): PDOContainer
+    public function createPDOContainer(): PDOContainerInterface
     {
         return new PDOContainer(
             new PDOConfigurationMySQLFactory(
