@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace WebServCo\Database\DataTransfer;
 
-use WebServCo\DataTransfer\Contract\DataTransferInterface;
+use WebServCo\Data\Contract\Transfer\DataTransferInterface;
 
 /**
  * Convenience object for PDO `errorInfo`
