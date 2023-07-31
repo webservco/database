@@ -8,13 +8,37 @@ use WebServCo\Data\Contract\Transfer\DataTransferInterface;
 
 final class PDOConfiguration implements DataTransferInterface
 {
-    public function __construct(
-        public readonly string $driverName,
-        public readonly string $host,
-        public readonly int $port,
-        public readonly string $dbname,
-        public readonly string $username,
-        public readonly string $passsword,
-    ) {
+    /**
+     * @readonly
+     */
+    public string $driverName;
+    /**
+     * @readonly
+     */
+    public string $host;
+    /**
+     * @readonly
+     */
+    public int $port;
+    /**
+     * @readonly
+     */
+    public string $dbname;
+    /**
+     * @readonly
+     */
+    public string $username;
+    /**
+     * @readonly
+     */
+    public string $passsword;
+    public function __construct(string $driverName, string $host, int $port, string $dbname, string $username, string $passsword)
+    {
+        $this->driverName = $driverName;
+        $this->host = $host;
+        $this->port = $port;
+        $this->dbname = $dbname;
+        $this->username = $username;
+        $this->passsword = $passsword;
     }
 }
