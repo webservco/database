@@ -34,9 +34,20 @@ interface PDOServiceInterface
     public function getErrorInfo(PDO|PDOException|PDOStatement $pdoObject): ?ErrorInfo;
 
     /**
+     * Helper for `PDO::lastInsertId`
+     *
+     * Use case: `PDO::lastInsertId` can also return false,
+     * however there is no info in the documentation about in which situation it returns false.
+     * https://www.php.net/manual/en/pdo.lastinsertid.php
+     *
+     * Make sure a string is always returned.
+     */
+    public function getLastInsertId(PDO $pdo, ?string $sequenceObjectName = null): string;
+
+    /**
      * Check if error is recoverable.
      *
-     * Use case: check if transaction can be retired.
+     * Use case: check if transaction can be retried.
      * References:
      * https://en.wikipedia.org/wiki/SQLSTATE
      * https://mariadb.com/kb/en/mariadb-error-codes/

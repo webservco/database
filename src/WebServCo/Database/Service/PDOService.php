@@ -80,6 +80,23 @@ final class PDOService implements PDOServiceInterface
         );
     }
 
+    public function getLastInsertId(PDO $pdo, ?string $sequenceObjectName = null): string
+    {
+        $result = $pdo->lastInsertId($sequenceObjectName);
+
+        /**
+         * Psalm false positive:
+         * ERROR: TypeDoesNotContainType - string does not contain false (see https://psalm.dev/056)
+         * However lastInsertId can also return false as per documentation.
+         * @psalm-suppress TypeDoesNotContainType
+         */
+        if ($result === false) {
+            throw new UnexpectedValueException('lastInsertId is false.');
+        }
+
+        return $result;
+    }
+
     public function isRecoverableError(Throwable $throwable): bool
     {
         if (!$throwable instanceof PDOException) {
