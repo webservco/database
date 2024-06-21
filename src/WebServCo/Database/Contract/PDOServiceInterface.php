@@ -23,6 +23,17 @@ interface PDOServiceInterface
     public function assertNoError(PDOStatement $stmt): bool;
 
     /**
+     *  Inspired by
+     *  WebServCo/Framework/Database/Utils/PreparedStatements.php.generatePlaceholdersString
+     *
+     *  Currently using old school loop
+     *  (didn't feel like choosing between using arrow or anonymous function - have to update static analysis rules)
+     *
+     * @param array<int,scalar|null> $array
+     */
+    public function generatePlaceholdersString(array $array): string;
+
+    /**
      * Helper for `PDOStatement::fetch`
      * Fetches the next row from a result set
      * with PDO::FETCH_ASSOC and validation.

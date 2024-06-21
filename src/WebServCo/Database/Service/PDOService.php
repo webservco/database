@@ -13,6 +13,8 @@ use WebServCo\Database\Contract\PDOServiceInterface;
 use WebServCo\Database\DataTransfer\ErrorInfo;
 
 use function array_key_exists;
+use function count;
+use function implode;
 use function is_array;
 use function is_int;
 use function is_string;
@@ -35,6 +37,19 @@ final class PDOService implements PDOServiceInterface
 
         // If we arrive here it means that the SQL state error code exists and is not the "not error" one.
         throw new UnexpectedValueException('Statement error.');
+    }
+
+    /**
+     * @param array<int,scalar|null> $array
+     */
+    public function generatePlaceholdersString(array $array): string
+    {
+        $data = [];
+        for ($i = 0; $i < count($array); $i += 1) {
+            $data[] = '?';
+        }
+
+        return implode(',', $data);
     }
 
     /**
@@ -88,6 +103,7 @@ final class PDOService implements PDOServiceInterface
          * Psalm false positive:
          * ERROR: TypeDoesNotContainType - string does not contain false (see https://psalm.dev/056)
          * However lastInsertId can also return false as per documentation.
+         *
          * @psalm-suppress TypeDoesNotContainType
          */
         if ($result === false) {
