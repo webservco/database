@@ -73,7 +73,10 @@ final class PDOService implements PDOServiceInterface
         return [];
     }
 
-    public function getErrorInfo(PDO|PDOException|PDOStatement $pdoObject): ?ErrorInfo
+    /**
+     * @param \PDO|\PDOException|\PDOStatement $pdoObject
+     */
+    public function getErrorInfo($pdoObject): ?ErrorInfo
     {
         $errorInfoArray = $this->getErrorInfoArray($pdoObject);
 
@@ -147,8 +150,9 @@ final class PDOService implements PDOServiceInterface
      * https://www.php.net/manual/en/class.pdoexception.php
      *
      * @return array<int,int|string|null>
+     * @param \PDO|\PDOException|\PDOStatement $pdoObject
      */
-    private function getErrorInfoArray(PDO|PDOException|PDOStatement $pdoObject): array
+    private function getErrorInfoArray($pdoObject): array
     {
         switch (true) {
             case $pdoObject instanceof PDOException:
@@ -161,16 +165,14 @@ final class PDOService implements PDOServiceInterface
 
     private function isRecoverableErrorMariadb(ErrorInfo $errorInfo): bool
     {
-        return match ($errorInfo->sqlStateErrorCode) {
-            // '40001': "transaction rollback" / "serialization failure"
-            // '1213': "Deadlock found when trying to get lock; try restarting transaction"
-            '40001' => $errorInfo->driverErrorCode === '1213',
-            // 'HY000' CLI-specific condition
-            // '1205': "Lock wait timeout exceeded; try restarting transaction"
-            'HY000' => $errorInfo->driverErrorCode === '1205',
-            // Any other situation.
-            default => false,
-        };
+        switch ($errorInfo->sqlStateErrorCode) {
+            case '40001':
+                return $errorInfo->driverErrorCode === '1213';
+            case 'HY000':
+                return $errorInfo->driverErrorCode === '1205';
+            default:
+                return false;
+        }
     }
 
     /**
@@ -207,7 +209,11 @@ final class PDOService implements PDOServiceInterface
         return $result;
     }
 
-    private function parseOriginalErrorInfoValue(mixed $value): int|string|null
+    /**
+     * @return int|string|null
+     * @param mixed $value
+     */
+    private function parseOriginalErrorInfoValue($value)
     {
         if (is_string($value) || is_int($value) || $value === null) {
             return $value;
