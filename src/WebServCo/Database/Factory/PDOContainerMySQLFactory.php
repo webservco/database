@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace WebServCo\Database\Factory;
 
 use WebServCo\Database\Container\PDOContainer;
+use WebServCo\Database\Contract\PDOContainerFactoryInterface;
 use WebServCo\Database\Contract\PDOContainerInterface;
 
-final class PDOContainerMySQLFactory
+final class PDOContainerMySQLFactory implements PDOContainerFactoryInterface
 {
     public function __construct(
         private string $host,
