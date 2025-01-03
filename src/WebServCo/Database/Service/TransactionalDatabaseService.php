@@ -47,6 +47,10 @@ final class TransactionalDatabaseService implements TransactionalDatabaseService
 
     public function rollBackTransaction(): bool
     {
+        if (!$this->pdoContainer->getPDO()->inTransaction()) {
+            throw new OutOfBoundsException('No transaction is currently active within the driver.');
+        }
+
         return $this->pdoContainer->getPDO()->rollBack();
     }
 }
