@@ -25,7 +25,7 @@
     "license" : "MIT",
     "name" : "webservco/database",
     "require": {
-        "php" : "^8.3",
+        "php" : "^8.4",
         "webservco/data" : "^0"
     },
     "require-dev": {
@@ -42,7 +42,7 @@
         "phpunit/phpunit": "^10",
         "slevomat/coding-standard": "^8",
         "squizlabs/php_codesniffer" : "^3",
-        "vimeo/psalm": "^5",
+        "vimeo/psalm": "^6",
         "webservco/coding-standards": "^0",
         "webservco/component-common": "^0"
     },
@@ -62,6 +62,7 @@
             "@check:psalm",
             "@check:phan"
         ],
+        "c": "@check",
         "fix:phpcs": "vendor/bin/phpcbf --standard=vendor/webservco/component-common/.phpcs/php-coding-standard.xml --extensions=php -sp bin config public resources src tests",
         "test" : "XDEBUG_MODE=coverage vendor/bin/phpunit --colors=always --configuration vendor/webservco/coding-standards/phpunit/phpunit-10.xml --display-deprecations --display-errors --display-incomplete --display-notices --display-skipped --display-warnings",
         "test:dox" : "@test --testdox"
