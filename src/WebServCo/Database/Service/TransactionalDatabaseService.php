@@ -45,6 +45,11 @@ final class TransactionalDatabaseService implements TransactionalDatabaseService
         }
     }
 
+    public function getPDOContainer(): PDOContainerInterface
+    {
+        return $this->pdoContainer;
+    }
+
     public function rollBackTransaction(): bool
     {
         if (!$this->pdoContainer->getPDO()->inTransaction()) {
