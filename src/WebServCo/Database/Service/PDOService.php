@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WebServCo\Database\Service;
 
+use Override;
 use PDO;
 use PDOException;
 use PDOStatement;
@@ -21,6 +22,7 @@ use function is_string;
 
 final class PDOService implements PDOServiceInterface
 {
+    #[Override]
     public function assertNoError(PDOStatement $stmt): bool
     {
         $errorInfo = $this->getErrorInfo($stmt);
@@ -42,6 +44,7 @@ final class PDOService implements PDOServiceInterface
     /**
      * @param array<int,scalar|null> $array
      */
+    #[Override]
     public function generatePlaceholdersString(array $array): string
     {
         $data = [];
@@ -55,6 +58,7 @@ final class PDOService implements PDOServiceInterface
     /**
      * @return array<string,scalar|null>
      */
+    #[Override]
     public function fetchAssoc(PDOStatement $stmt): array
     {
         /**
@@ -73,6 +77,7 @@ final class PDOService implements PDOServiceInterface
         return [];
     }
 
+    #[Override]
     public function getErrorInfo(PDO|PDOException|PDOStatement $pdoObject): ?ErrorInfo
     {
         $errorInfoArray = $this->getErrorInfoArray($pdoObject);
@@ -95,6 +100,7 @@ final class PDOService implements PDOServiceInterface
         );
     }
 
+    #[Override]
     public function getLastInsertId(PDO $pdo, ?string $sequenceObjectName = null): string
     {
         $result = $pdo->lastInsertId($sequenceObjectName);
@@ -113,6 +119,7 @@ final class PDOService implements PDOServiceInterface
         return $result;
     }
 
+    #[Override]
     public function isRecoverableError(Throwable $throwable): bool
     {
         if (!$throwable instanceof PDOException) {
@@ -130,6 +137,7 @@ final class PDOService implements PDOServiceInterface
         return $this->isRecoverableErrorMariadb($errorInfo);
     }
 
+    #[Override]
     public function prepareStatement(PDO $pdo, string $query): PDOStatement
     {
         $stmt = $pdo->prepare($query);

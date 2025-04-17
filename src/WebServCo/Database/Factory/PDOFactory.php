@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebServCo\Database\Factory;
 
 use OutOfBoundsException;
+use Override;
 use PDO;
 use WebServCo\Database\Contract\PDOFactoryInterface;
 use WebServCo\Database\DataTransfer\PDOConfiguration;
@@ -16,6 +17,7 @@ use function sprintf;
  */
 final class PDOFactory implements PDOFactoryInterface
 {
+    #[Override]
     public function createPDO(PDOConfiguration $pdoConfiguration): PDO
     {
         return new PDO(

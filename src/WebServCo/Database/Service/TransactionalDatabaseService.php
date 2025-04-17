@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebServCo\Database\Service;
 
 use OutOfBoundsException;
+use Override;
 use Throwable;
 use WebServCo\Database\Contract\PDOContainerInterface;
 use WebServCo\Database\Contract\TransactionalDatabaseServiceInterface;
@@ -25,11 +26,13 @@ final class TransactionalDatabaseService implements TransactionalDatabaseService
     {
     }
 
+    #[Override]
     public function beginTransaction(): bool
     {
         return $this->pdoContainer->getPDO()->beginTransaction();
     }
 
+    #[Override]
     public function commitTransaction(): bool
     {
         if (!$this->pdoContainer->getPDO()->inTransaction()) {
@@ -45,11 +48,13 @@ final class TransactionalDatabaseService implements TransactionalDatabaseService
         }
     }
 
+    #[Override]
     public function getPDOContainer(): PDOContainerInterface
     {
         return $this->pdoContainer;
     }
 
+    #[Override]
     public function rollBackTransaction(): bool
     {
         if (!$this->pdoContainer->getPDO()->inTransaction()) {

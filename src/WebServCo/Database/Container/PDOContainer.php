@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WebServCo\Database\Container;
 
+use Override;
 use PDO;
 use WebServCo\Database\Contract\PDOConfigurationFactoryInterface;
 use WebServCo\Database\Contract\PDOContainerInterface;
@@ -22,6 +23,7 @@ final class PDOContainer implements PDOContainerInterface
     ) {
     }
 
+    #[Override]
     public function createPDO(): PDO
     {
         return $this->pdoFactory->createPDO(
@@ -29,6 +31,7 @@ final class PDOContainer implements PDOContainerInterface
         );
     }
 
+    #[Override]
     public function getPDO(): PDO
     {
         if ($this->pdo === null) {
@@ -38,6 +41,7 @@ final class PDOContainer implements PDOContainerInterface
         return $this->pdo;
     }
 
+    #[Override]
     public function getPDOService(): PDOServiceInterface
     {
         if ($this->pdoService === null) {

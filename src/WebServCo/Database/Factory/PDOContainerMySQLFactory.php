@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WebServCo\Database\Factory;
 
+use Override;
 use WebServCo\Database\Container\PDOContainer;
 use WebServCo\Database\Contract\PDOContainerFactoryInterface;
 use WebServCo\Database\Contract\PDOContainerInterface;
@@ -19,6 +20,7 @@ final class PDOContainerMySQLFactory implements PDOContainerFactoryInterface
     ) {
     }
 
+    #[Override]
     public function createPDOContainer(): PDOContainerInterface
     {
         return new PDOContainer(
