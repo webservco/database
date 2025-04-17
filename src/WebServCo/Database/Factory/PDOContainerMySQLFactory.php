@@ -11,16 +11,20 @@ use WebServCo\Database\Contract\PDOContainerInterface;
 
 final class PDOContainerMySQLFactory implements PDOContainerFactoryInterface
 {
-    public function __construct(
-        private string $host,
-        private int $port,
-        private string $dbname,
-        private string $username,
-        private string $password,
-    ) {
+    private string $host;
+    private int $port;
+    private string $dbname;
+    private string $username;
+    private string $password;
+    public function __construct(string $host, int $port, string $dbname, string $username, string $password)
+    {
+        $this->host = $host;
+        $this->port = $port;
+        $this->dbname = $dbname;
+        $this->username = $username;
+        $this->password = $password;
     }
 
-    #[Override]
     public function createPDOContainer(): PDOContainerInterface
     {
         return new PDOContainer(

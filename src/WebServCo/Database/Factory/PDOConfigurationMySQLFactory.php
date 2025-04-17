@@ -10,16 +10,20 @@ use WebServCo\Database\DataTransfer\PDOConfiguration;
 
 final class PDOConfigurationMySQLFactory implements PDOConfigurationFactoryInterface
 {
-    public function __construct(
-        private string $host,
-        private int $port,
-        private string $dbname,
-        private string $username,
-        private string $password,
-    ) {
+    private string $host;
+    private int $port;
+    private string $dbname;
+    private string $username;
+    private string $password;
+    public function __construct(string $host, int $port, string $dbname, string $username, string $password)
+    {
+        $this->host = $host;
+        $this->port = $port;
+        $this->dbname = $dbname;
+        $this->username = $username;
+        $this->password = $password;
     }
 
-    #[Override]
     public function createPDOConfiguration(): PDOConfiguration
     {
         return new PDOConfiguration('mysql', $this->host, $this->port, $this->dbname, $this->username, $this->password);

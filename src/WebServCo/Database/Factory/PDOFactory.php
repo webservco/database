@@ -17,7 +17,6 @@ use function sprintf;
  */
 final class PDOFactory implements PDOFactoryInterface
 {
-    #[Override]
     public function createPDO(PDOConfiguration $pdoConfiguration): PDO
     {
         return new PDO(
@@ -48,9 +47,11 @@ final class PDOFactory implements PDOFactoryInterface
 
     private function validateDriverName(string $driverName): bool
     {
-        return match ($driverName) {
-            'mysql' => true,
-            default => throw new OutOfBoundsException('Unsupported driver.'),
-        };
+        switch ($driverName) {
+            case 'mysql':
+                return true;
+            default:
+                throw new OutOfBoundsException('Unsupported driver.');
+        }
     }
 }

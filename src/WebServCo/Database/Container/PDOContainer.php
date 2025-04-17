@@ -14,16 +14,17 @@ use WebServCo\Database\Service\PDOService;
 
 final class PDOContainer implements PDOContainerInterface
 {
+    private PDOConfigurationFactoryInterface $pdoConfigurationFactory;
+    private PDOFactoryInterface $pdoFactory;
     private ?PDO $pdo = null;
     private ?PDOServiceInterface $pdoService = null;
 
-    public function __construct(
-        private PDOConfigurationFactoryInterface $pdoConfigurationFactory,
-        private PDOFactoryInterface $pdoFactory,
-    ) {
+    public function __construct(PDOConfigurationFactoryInterface $pdoConfigurationFactory, PDOFactoryInterface $pdoFactory)
+    {
+        $this->pdoConfigurationFactory = $pdoConfigurationFactory;
+        $this->pdoFactory = $pdoFactory;
     }
 
-    #[Override]
     public function createPDO(): PDO
     {
         return $this->pdoFactory->createPDO(
@@ -31,23 +32,19 @@ final class PDOContainer implements PDOContainerInterface
         );
     }
 
-    #[Override]
     public function getPDO(): PDO
     {
         if ($this->pdo === null) {
             $this->pdo = $this->createPDO();
         }
-
         return $this->pdo;
     }
 
-    #[Override]
     public function getPDOService(): PDOServiceInterface
     {
         if ($this->pdoService === null) {
             $this->pdoService = new PDOService();
         }
-
         return $this->pdoService;
     }
 }
