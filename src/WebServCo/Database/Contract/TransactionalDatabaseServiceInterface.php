@@ -10,5 +10,7 @@ interface TransactionalDatabaseServiceInterface
 
     public function commitTransaction(): bool;
 
+    public function getPDOContainer(): PDOContainerInterface;
+
     public function rollBackTransaction(): bool;
 }
