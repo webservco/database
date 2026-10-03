@@ -6,15 +6,15 @@ namespace WebServCo\Database\DataTransfer;
 
 use WebServCo\Data\Contract\Transfer\DataTransferInterface;
 
-final class PDOConfiguration implements DataTransferInterface
+final readonly class PDOConfiguration implements DataTransferInterface
 {
     public function __construct(
-        public readonly string $driverName,
-        public readonly string $host,
-        public readonly int $port,
-        public readonly string $dbname,
-        public readonly string $username,
-        public readonly string $passsword,
+        public string $driverName,
+        public string $host,
+        public int $port,
+        public string $dbname,
+        public string $username,
+        public string $passsword,
     ) {
     }
 }
