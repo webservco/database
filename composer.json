@@ -26,7 +26,7 @@
     "name" : "webservco/database",
     "require": {
         "php" : "^8.4",
-        "webservco/data" : "^1"
+        "webservco/data" : "^2"
     },
     "require-dev": {
         "pds/skeleton": "^1",
