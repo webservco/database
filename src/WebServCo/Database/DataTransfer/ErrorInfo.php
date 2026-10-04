@@ -16,15 +16,27 @@ use WebServCo\Data\Contract\Transfer\DataTransferInterface;
  * Why nullables: "If the SQLSTATE error code is not set or there is no driver-specific error,
  * the elements following element 0 will be set to null."
  */
-final readonly class ErrorInfo implements DataTransferInterface
+final class ErrorInfo implements DataTransferInterface
 {
-    public function __construct(
+    /**
+     * @readonly
+     */
+    public string $sqlStateErrorCode;
+    /**
+     * @readonly
+     */
+    public ?string $driverErrorCode;
+    /**
+     * @readonly
+     */
+    public ?string $driverErrorMessage;
+    public function __construct(string $sqlStateErrorCode, ?string $driverErrorCode, ?string $driverErrorMessage)
+    {
         // 0 "SQLSTATE error code (a five characters alphanumeric identifier defined in the ANSI SQL standard)."
-        public string $sqlStateErrorCode,
+        $this->sqlStateErrorCode = $sqlStateErrorCode;
         // 1 "Driver-specific error code."
-        public ?string $driverErrorCode,
+        $this->driverErrorCode = $driverErrorCode;
         // 2 "Driver-specific error message."
-        public ?string $driverErrorMessage,
-    ) {
+        $this->driverErrorMessage = $driverErrorMessage;
     }
 }

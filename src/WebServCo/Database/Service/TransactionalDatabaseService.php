@@ -12,6 +12,7 @@ use WebServCo\Database\Contract\TransactionalDatabaseServiceInterface;
 
 final class TransactionalDatabaseService implements TransactionalDatabaseServiceInterface
 {
+    private PDOContainerInterface $pdoContainer;
     /**
      * Note: avoid using PDO directly in class constructors,
      * it guarantees db connection open on initialization which is not always intended.
@@ -22,8 +23,9 @@ final class TransactionalDatabaseService implements TransactionalDatabaseService
      * Use case: a script that runs for a long time and uses the database connection later in the run.
      * Prevents error: 2006 MySQL server has gone away
      */
-    public function __construct(private PDOContainerInterface $pdoContainer)
+    public function __construct(PDOContainerInterface $pdoContainer)
     {
+        $this->pdoContainer = $pdoContainer;
     }
 
     #[Override]
