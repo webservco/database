@@ -42,7 +42,10 @@ interface PDOServiceInterface
      */
     public function fetchAssoc(PDOStatement $stmt): array;
 
-    public function getErrorInfo(PDO|PDOException|PDOStatement $pdoObject): ?ErrorInfo;
+    /**
+     * @param \PDO|\PDOException|\PDOStatement $pdoObject
+     */
+    public function getErrorInfo($pdoObject): ?ErrorInfo;
 
     /**
      * Helper for `PDO::lastInsertId`
