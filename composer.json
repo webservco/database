@@ -20,7 +20,7 @@
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
-    "description" : "A PHP component/library.",
+    "description" : "A PHP component/library. PDO for MySQL and MariaDB, with a connection that opens on first use, query helpers and transactions.",
     "homepage" : "https://webserv.co",
     "keywords" : [
         "component",
